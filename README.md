@@ -37,23 +37,49 @@ There is also a section about the null space of the Stokes monolythic sytem in t
 
 ## Lab 3
 
-impose L20 for the discrete pressure: inform the solver with the null space 
+In this lab, we tackle the following problems:
+1. Solve the Stokes problem with GMRES and ILU preconditioner, which means adding parameters
+    ```python
+    parameters = {'ksp_type': 'gmres', 'pc_type': 'ilu', 'ksp_rtol': 1.e-8, 'ksp_max_it': 10000}
+    ```
+2. Convergence test for Stokes in the case we know the analytical solution (so we take exactly the case of the last part of the previous lab), both for $\mathbb{P}^{k+1}/\mathbb{P}^{k}$ and $\mathbb{P}^1_b/\mathbb{P}^1$
 
-First exercise to do (cavity problem)
-
-LinearVariationalSolver to get number of iterations
-
-Parameters for GMRES with tolerance $1e-8$ with ILU preconditioner
-```python
-parameters = {'ksp_type': 'gmres', 'pc_type': 'ilu', 'ksp_rtol': 1.e-8, 'ksp_max_it': 10000}
-```
-
-Decrease h implies more itereations for GMRES
+Additional notes:
+- To impose $\int _\Omega p_h \approx 0$ we need to inform the solver about the null space for Dirichlet boundary conditions
+    ```python
+    nullspace = MixedVectorSpaceBasis(
+        W, 
+        [
+            W.sub(0), 
+            VectorSpaceBasis(constant=True, comm=COMM_WORLD)
+        ])
+    solve(a == L, w, bcs=bc, nullspace=nullspace)
+    ```
+- To get the number of iteration from GMRES, you need to use `LinearVariationalSolver` to solve the problem.
+- Decreasing $h$ corresponds to more itereations for GMRES.
+- The theoretical orders of convergence are
+    $$
+    \begin{align*}
+    \|u - u_h\|_{L^2} &= 
+    \begin{cases}
+    O(h^{k+1}) \quad &\text{for } \mathbb{P}^{k}/\mathbb{P}^{k-1}\\
+    O(h^{2}) \quad \quad &\text{for }\mathbb{P}^{1}_b/\mathbb{P}^{1}
+    \end{cases}\\
+    \|\nabla u - \nabla u_h\|_{L^2} &= 
+    \begin{cases}
+    O(h^{k}) \quad \quad &\text{for } \mathbb{P}^{k}/\mathbb{P}^{k-1}\\
+    O(h^{1}) \quad \quad &\text{for }\mathbb{P}^{1}_b/\mathbb{P}^{1}
+    \end{cases}\\
+    \|p - p_h\|_{L^2} &= 
+    \begin{cases}
+    O(h^{k}) \quad \; &\text{for } \mathbb{P}^{k}/\mathbb{P}^{k-1}\\
+    O(h^{3/2}) \quad \; &\text{for }\mathbb{P}^{1}_b/\mathbb{P}^{1}
+    \end{cases}
+    \end{align*}
+    $$
+- We check the orders obtained numerically graphically (log-log plot) and quantiatively (logaritmic comparison)
+- We may obtain a worse order for the pressure, since the condition $\int _\Omega p_h \approx 0$ is not precise
 
 bubble convergence
-
-convergence test with fully Dirichlet conditions (same problem as Lab 2) and theorical orders of convergence for pressure and velocity review
-
-plots and computation of oder for convergence test
 
 ## Lab 4
