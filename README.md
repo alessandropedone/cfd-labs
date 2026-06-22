@@ -29,7 +29,7 @@ This lab contains the Stokes system assembly and solution, in very simple cases 
 - Additional parameters for the solver
 - Inspection of the matrix (sparsity pattern and difference when boundary conditions are on)
 
-There is also a section about the null space of the Stokes monolythic sytem in the case of fully Dirichlet boundary conditions. In particular, if we call $\Sigma$ the matrix associated to the problem with boundary conditions, we observe that $\ker(\Sigma) = \mathrm{span} ([0,1])$, i.e. the space of zero velocity and constant pressure.
+There is also a section about the null space of the Stokes monolithic sytem in the case of fully Dirichlet boundary conditions. In particular, if we call $\Sigma$ the matrix associated to the problem with boundary conditions, we observe that $\ker(\Sigma) = \mathrm{span} ([0,1])$, i.e. the space of zero velocity and constant pressure.
 
 > Obvisouly translations of the pressure are allowed we have only Dirichlet boundary conditions on the velocity.
 
@@ -44,6 +44,8 @@ In this lab, we tackle the following problems:
     ```
 2. Convergence test for Stokes in the case we know the analytical solution (so we take exactly the case of the last part of the previous lab), both for $\mathbb{P}^{k+1}/\mathbb{P}^{k}$ and $\mathbb{P}^1_b/\mathbb{P}^1$
 
+> There is also a starting section about the solving linear systems and preconditioning in Firedrake.
+
 Additional notes:
 - To impose $\int _\Omega p_h \approx 0$ we need to inform the solver about the null space for Dirichlet boundary conditions
     ```python
@@ -55,8 +57,8 @@ Additional notes:
         ])
     solve(a == L, w, bcs=bc, nullspace=nullspace)
     ```
-- To get the number of iteration from GMRES, you need to use `LinearVariationalSolver` to solve the problem.
-- Decreasing $h$ corresponds to more itereations for GMRES.
+- To get the number of iteration from GMRES, you need to use `LinearVariationalProblem` and `LinearVariationalSolver` to separate the creation of the problem and the solution step
+- Decreasing $h$ corresponds to more itereations for GMRES if we use a nonoptimal preconditioner
 - The theoretical orders of convergence are
     $$
     \begin{align*}
@@ -80,6 +82,36 @@ Additional notes:
 - We check the orders obtained numerically graphically (log-log plot) and quantiatively (logaritmic comparison)
 - We may obtain a worse order for the pressure, since the condition $\int _\Omega p_h \approx 0$ is not precise
 
-bubble convergence
-
 ## Lab 4
+
+This lab is about the optimal preconditioners for the Stokes system:
+
+$$
+P_d = \begin{bmatrix}
+A & 0 \\
+0 & \frac{1}{\nu}M_p
+\end{bmatrix}, \quad \quad 
+P = \begin{bmatrix}
+A & 0 \\
+\pm B & \frac{1}{\nu}M_p
+\end{bmatrix}.
+$$
+
+Additional notes:
+- We define the preconditioner passing the corresponding bilinear form to `LinearVariationalProblem` as an input arguement
+- We use `fieldsplit` to activate block splitting (additive for block diagonal preconditioner and multiplicative for block lower triangular preconditioner), and for each block of the splitting we use different preconditioners (LU or ILU)
+- The number of iterations of GMRES is almost constant with respect to $h$ with optimal preconditioners, but when we introduce ILU for one of the blocks we may lose this property
+
+## Lab 5
+The main topic of this lab is the pressure matrix method for Stokes, that corresponds to solving for the Schur complement. Contents:
+- Idea: we don't compute the inverse of $A$, but we define a solver with specific PETSc parameters (both fro $A$ and $S$)
+- Application: we use this approach to solve the first time-dependent problem for the Stokes equations
+
+Annotations:
+- To the define the solver for the Schur complement we rely on 
+    ```python
+    S = PETSc.Mat().createSchurComplement( A, A, Bt, asB, None )
+    ```
+- There are several ways to use the pressure mass matrix to precondition the Schur complement (full matrix, the diagonal or the lumped mass matrix)
+
+## Lab 6
