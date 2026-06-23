@@ -5,7 +5,7 @@ In particular, each folder corresponds to a lab and contains the problem, the so
 
 In this README, you can find a quick overview of the content of each lab.
 
-## Lab 1
+## Lab 1. Firedrake.
 This lab contains a general introduction to Firedrake with some basic notes about solving numerical problems with this library. Contents:
 - Define and plot the mesh
 - Define function space and trial/test functions
@@ -17,7 +17,7 @@ This lab contains a general introduction to Firedrake with some basic notes abou
 
 > In the weak formulations specify you need to introduce the lift.
 
-## Lab 2
+## Lab 2. Stokes: system assembly.
 This lab contains the Stokes system assembly and solution, in very simple cases (Coutte flow and Poiseuille flow). Contents:
 - Define and plot a rectangular mesh
 - Define vector and mixed function space
@@ -35,7 +35,7 @@ There is also a section about the null space of the Stokes monolithic sytem in t
 
 > So, when we have Dirichlet boundary conditions, we want to impose $p \in L^2_0$, i.e. $\int_\Omega p = 0$ at the discrete level. And we see this in next lab.
 
-## Lab 3
+## Lab 3. Stokes: preconditioning and convergence.
 
 In this lab, we tackle the following problems:
 1. Solve the Stokes problem with GMRES and ILU preconditioner, which means adding parameters
@@ -57,6 +57,7 @@ Additional notes:
         ])
     solve(a == L, w, bcs=bc, nullspace=nullspace)
     ```
+- Even if we inform the solver, the presence of a nontrivial null space may spoil the order of convergece we observe, sending us back to the first order: for this reason we introduce a new quantity $$\hat p_h = p_h + \frac{1}{|\Omega|}\int_\Omega (p-p_h)$$, since in this case we know the exact solution $p$
 - To get the number of iteration from GMRES, you need to use `LinearVariationalProblem` and `LinearVariationalSolver` to separate the creation of the problem and the solution step
 - Decreasing $h$ corresponds to more itereations for GMRES if we use a nonoptimal preconditioner
 - The theoretical orders of convergence are
@@ -82,7 +83,7 @@ Additional notes:
 - We check the orders obtained numerically graphically (log-log plot) and quantiatively (logaritmic comparison)
 - We may obtain a worse order for the pressure, since the condition $\int _\Omega p_h \approx 0$ is not precise
 
-## Lab 4
+## Lab 4. Stokes: optimal preconditioning.
 
 This lab is about the optimal preconditioners for the Stokes system:
 
@@ -102,16 +103,25 @@ Additional notes:
 - We use `fieldsplit` to activate block splitting (additive for block diagonal preconditioner and multiplicative for block lower triangular preconditioner), and for each block of the splitting we use different preconditioners (LU or ILU)
 - The number of iterations of GMRES is almost constant with respect to $h$ with optimal preconditioners, but when we introduce ILU for one of the blocks we may lose this property
 
-## Lab 5
+## Lab 5. Stokes: pressure matrix (Schur) method.
 The main topic of this lab is the pressure matrix method for Stokes, that corresponds to solving for the Schur complement. Contents:
 - Idea: we don't compute the inverse of $A$, but we define a solver with specific PETSc parameters (both fro $A$ and $S$)
-- Application: we use this approach to solve the first time-dependent problem for the Stokes equations
+- Application: we use this approach to sove the first time-dependent problem for the Stokes equations
 
 Annotations:
 - To the define the solver for the Schur complement we rely on 
     ```python
-    S = PETSc.Mat().createSchurComplement( A, A, Bt, asB, None )
+    S = PETSc.Mat().createSchurComplement(A, A, Bt, asB, None)
     ```
 - There are several ways to use the pressure mass matrix to precondition the Schur complement (full matrix, the diagonal or the lumped mass matrix)
 
-## Lab 6
+## Lab 6. NS: Euler and BDF methods.
+
+This lab contains linear methods to solver time-dependent Navier-Stokes equations. Contents:
+- Euler methods: fully explicit, viscous implicit and advection semi-implicit
+- BDF methods: fully explicit, viscous implicit and advection semi-implicit
+- Convergence tests in time: Euler is first order and BDF is second order
+
+Annotations:
+- We can change the preconditioner depeding on the explicit/implicit strategy we choose, since the top left block of the monolithic system changes (see first block of code)
+- To observe che convergence for the pressure we need again a correction for its mean
