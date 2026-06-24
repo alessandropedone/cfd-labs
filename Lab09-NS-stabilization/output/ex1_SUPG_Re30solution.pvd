@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+<Collection>
+<DataSet timestep="0" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_0.vtu" />
+<DataSet timestep="1" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_1.vtu" />
+<DataSet timestep="2" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_2.vtu" />
+<DataSet timestep="3" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_3.vtu" />
+<DataSet timestep="4" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_4.vtu" />
+<DataSet timestep="5" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_5.vtu" />
+<DataSet timestep="6" file="ex1_SUPG_Re30solution/ex1_SUPG_Re30solution_6.vtu" />
+</Collection>
+</VTKFile>
