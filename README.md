@@ -104,6 +104,7 @@ Additional notes:
 - The number of iterations of GMRES is almost constant with respect to $h$ with optimal preconditioners, but when we introduce ILU for one of the blocks we may lose this property
 
 ## Lab 5. Stokes: pressure matrix (Schur) method.
+
 The main topic of this lab is the pressure matrix method for Stokes, that corresponds to solving for the Schur complement. Contents:
 - Idea: we don't compute the inverse of $A$, but we define a solver with specific PETSc parameters (both fro $A$ and $S$)
 - Application: we use this approach to sove the first time-dependent problem for the Stokes equations
@@ -114,8 +115,12 @@ Annotations:
     S = PETSc.Mat().createSchurComplement(A, A, Bt, asB, None)
     ```
 - There are several ways to use the pressure mass matrix to precondition the Schur complement (full matrix, the diagonal or the lumped mass matrix)
+- We impose weakly Dirichlet boundary conditions, that means using Neumann-type structure
+    $$
+    u = g + \varepsilon (\nabla u - p)n \implies (\nabla u - p)n  = \frac{1}{\varepsilon} (u-g).
+    $$
 
-## Lab 6. NS: Euler and BDF methods.
+## Lab 6. NS: Euler's and BDF methods.
 
 This lab contains linear methods to solver time-dependent Navier-Stokes equations. Contents:
 - Euler methods: fully explicit, viscous implicit and advection semi-implicit
@@ -125,3 +130,7 @@ This lab contains linear methods to solver time-dependent Navier-Stokes equation
 Annotations:
 - We can change the preconditioner depeding on the explicit/implicit strategy we choose, since the top left block of the monolithic system changes (see first block of code)
 - To observe che convergence for the pressure we need again a correction for its mean
+
+# Lab 7. NS: Picard's and Newton's methods.
+
+# Lab 8. NS: Scalable Nonlinear Equations Solver (SNES).
