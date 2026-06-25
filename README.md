@@ -1,5 +1,5 @@
 # CFD labs
-This repository contains the solutions of the lab sessions of __COMPUTATIONAL FLUID DYNAMICS COURSE A.Y. 2025/2026__.
+This repository contains the solutions of the lab sessions of __COMPUTATIONAL FLUID DYNAMICS COURSE (A.Y. 2025/2026)__, held by Prof. Nicola Parolini and Prof. Lorenzo Valdettaro.
 
 In particular, each folder corresponds to a lab and contains the problem, the solution, the reference code provided by the professor (which may not overlap perfectly with the questions of the lab) and my solution.
 
@@ -134,3 +134,32 @@ Annotations:
 # Lab 7. NS: Picard's and Newton's methods.
 
 # Lab 8. NS: Scalable Nonlinear Equations Solver (SNES).
+
+# Lab 9. NS: Stabilization techniques.
+
+Contents:
+- Conditional definition of a parameter:
+    ```python
+    deltaK = delta * conditional(lt(ReK, one), h/(ubar+1e-10), h**2 * Re)
+    ```
+
+# Lab 10. NS: Time dependent simulation with Chorin-Temam method.
+
+The goal of this lab is to implement the incremental Chorin-Temam method to solve the time-dependent Navier-Stokes equation for a flow past a cylinder. Contents:
+- Forms for the three steps of the incremental Chorin-Temam method
+- Boundary conditions: no-slip on the cylinder, no-slip or free-slip on the walls, Dirichlet condition at the inflow, Neumann condition on the stress at the outflow 
+- The initial condition is given by the Stokes equations
+- At each time step the drag force and the lift force are computed
+
+# Lab 11. NS: Boussinesq buoyancy model as a coupled problem.
+
+This lab contains the solution of the thermal boundary layer near a hot plate, modeled by the steady incompressible Navier–Stokes equations with the Boussinesq buoyancy model. Contents:
+- Fixed point method
+- SUPG stabilization for the advection-diffusion of the temperature
+
+# Lab 12. Level-set method for multi-phase flows.
+
+Dir + Free-slip => I still need the null space
+
+# Lab 13. Inexact factorization.
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+<Collection>
+<DataSet timestep="0" file="lab12_phi/lab12_phi_0.vtu" />
+<DataSet timestep="0.1" file="lab12_phi/lab12_phi_1.vtu" />
+<DataSet timestep="0.2" file="lab12_phi/lab12_phi_2.vtu" />
+<DataSet timestep="0.3" file="lab12_phi/lab12_phi_3.vtu" />
+<DataSet timestep="0.4" file="lab12_phi/lab12_phi_4.vtu" />
+<DataSet timestep="0.5" file="lab12_phi/lab12_phi_5.vtu" />
+<DataSet timestep="0.6" file="lab12_phi/lab12_phi_6.vtu" />
+<DataSet timestep="0.7000000000000001" file="lab12_phi/lab12_phi_7.vtu" />
+<DataSet timestep="0.8" file="lab12_phi/lab12_phi_8.vtu" />
+<DataSet timestep="0.9" file="lab12_phi/lab12_phi_9.vtu" />
+<DataSet timestep="1.0" file="lab12_phi/lab12_phi_10.vtu" />
+<DataSet timestep="1.1" file="lab12_phi/lab12_phi_11.vtu" />
+<DataSet timestep="1.2" file="lab12_phi/lab12_phi_12.vtu" />
+<DataSet timestep="1.3" file="lab12_phi/lab12_phi_13.vtu" />
+<DataSet timestep="1.4000000000000001" file="lab12_phi/lab12_phi_14.vtu" />
+<DataSet timestep="1.5" file="lab12_phi/lab12_phi_15.vtu" />
+<DataSet timestep="1.6" file="lab12_phi/lab12_phi_16.vtu" />
+<DataSet timestep="1.7" file="lab12_phi/lab12_phi_17.vtu" />
+<DataSet timestep="1.8" file="lab12_phi/lab12_phi_18.vtu" />
+<DataSet timestep="1.9000000000000001" file="lab12_phi/lab12_phi_19.vtu" />
+<DataSet timestep="2.0" file="lab12_phi/lab12_phi_20.vtu" />
+<DataSet timestep="2.1" file="lab12_phi/lab12_phi_21.vtu" />
+</Collection>
+</VTKFile>
