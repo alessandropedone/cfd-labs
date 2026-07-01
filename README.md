@@ -163,3 +163,4 @@ Dir + Free-slip => I still need the null space
 
 # Lab 13. Inexact factorization.
 
+In the mass matrix of ACT we include 1/dt!!
