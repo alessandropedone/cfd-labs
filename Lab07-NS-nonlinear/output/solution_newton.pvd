@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+<Collection>
+<DataSet timestep="0" file="solution_newton/solution_newton_0.vtu" />
+<DataSet timestep="1" file="solution_newton/solution_newton_1.vtu" />
+<DataSet timestep="2" file="solution_newton/solution_newton_2.vtu" />
+<DataSet timestep="3" file="solution_newton/solution_newton_3.vtu" />
+<DataSet timestep="4" file="solution_newton/solution_newton_4.vtu" />
+</Collection>
+</VTKFile>

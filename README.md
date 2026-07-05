@@ -21,8 +21,8 @@ This lab contains a general introduction to Firedrake with some basic notes abou
 This lab contains the Stokes system assembly and solution, in very simple cases (Coutte flow and Poiseuille flow). Contents:
 - Define and plot a rectangular mesh
 - Define vector and mixed function space
-- Tests with non inf-sup stable spaces  $\mathbb{P}^1/\mathbb{P}^0$ and $\mathbb{P}^1/\mathbb{P}^1$ 
-- Tests with inf-sup stable spaaces $\mathbb{P}^2/\mathbb{P}^1$ and $\mathbb{P}_b^1/\mathbb{P}^1$
+- Tests with non inf-sup stable spaces $\mathbb{P}^1/\mathbb{P}^0$ and $\mathbb{P}^1/\mathbb{P}^1$ 
+- Tests with inf-sup stable spaces $\mathbb{P}^2/\mathbb{P}^1$ and $\mathbb{P}_b^1/\mathbb{P}^1$
 - Quiver plot for the velocity field
 - Compute the $H^1$, $H^1_0$ and $L^2$ errors
 - Compute the number of DOF
@@ -44,7 +44,7 @@ In this lab, we tackle the following problems:
     ```
 2. Convergence test for Stokes in the case we know the analytical solution (so we take exactly the case of the last part of the previous lab), both for $\mathbb{P}^{k+1}/\mathbb{P}^{k}$ and $\mathbb{P}^1_b/\mathbb{P}^1$
 
-> There is also a starting section about the solving linear systems and preconditioning in Firedrake.
+> There is also a starting section about solving linear systems and preconditioning with Firedrake.
 
 Additional notes:
 - To impose $\int _\Omega p_h \approx 0$ we need to inform the solver about the null space for Dirichlet boundary conditions
@@ -59,7 +59,7 @@ Additional notes:
     ```
 - Even if we inform the solver, the presence of a nontrivial null space may spoil the order of convergece we observe, sending us back to the first order: for this reason we introduce a new quantity $$\hat p_h = p_h + \frac{1}{|\Omega|}\int_\Omega (p-p_h)$$, since in this case we know the exact solution $p$
 - To get the number of iteration from GMRES, you need to use `LinearVariationalProblem` and `LinearVariationalSolver` to separate the creation of the problem and the solution step
-- Decreasing $h$ corresponds to more itereations for GMRES if we use a nonoptimal preconditioner
+- Decreasing $h$ corresponds to more itereations for GMRES if we use a non-optimal preconditioner
 - The theoretical orders of convergence are
     $$
     \begin{align*}
@@ -133,7 +133,30 @@ Annotations:
 
 # Lab 7. NS: Picard's and Newton's methods.
 
+This lab contains the implementation of Picard's and Newton's methods to solve stationary Navier-Stokes equations. Notes:
+- Stopping criterion:
+    $$
+    \frac{\|u_k-u_{k-1}\|_{H^1}}{\|u_{k-1}\|_{H^1}}
+    +
+    \frac{\|p_k-p_{k-1}\|_{L^2}}{\|p_{k-1}\|_{L^2}}
+    \le \mathrm{tol}.
+    $$
+- The solver is initialized using Stokes equations
+
 # Lab 8. NS: Scalable Nonlinear Equations Solver (SNES).
+
+The goal of this lab is to solve the Navier-Stokes equations, both stationary and time-dependent, using SNES directly to solve the nonlinear problem. Contents:
+- To solve the stationary problem we define a functional and find its zero in this way
+    ```python
+    G = 2*Constant(nu)*inner(sym(grad(uh)), sym(grad(v)))*dx  + inner(dot(grad(uh), uh), v)*dx  - div(v)*ph*dx  + q*div(uh)*dx - inner(f, v)*dx
+    solve(G == 0, wh, bcs=bcs, solver_parameters=param)
+    ```
+    > We don't use test functions!
+- To plot the steamlines the stream function $\psi$ is computed
+- Some quantities of interest are computed: drag force, flow rate through the outlet and total pressure jump
+- In the time-dependent case we just need to modify the functional to include to time-advacing scheme and write the time loop
+- Boundary conditions: no-slip on the cylinder, free-slip on the walls, Dirichlet condition at the inflow, Neumann condition on the stress at the outflow 
+
 
 # Lab 9. NS: Stabilization techniques.
 
