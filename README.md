@@ -160,8 +160,10 @@ The goal of this lab is to solve the Navier-Stokes equations, both stationary an
 
 # Lab 9. NS: Stabilization techniques.
 
-Contents:
-- Conditional definition of a parameter:
+This lab deals with the most important stabilization methods seen during the course. Contents:
+- Brezzi-Pitkäranta and SUPG stabilization applied to a Picard iteration scheme for Navier-Stokes equations
+- Brezzi-Pitkäranta may not work properly when $Re$ is too big, i.e. when the problem is too advection-dominated we may need too much stabilization for a non-stongly-consistent method such as Brezzi-Pitkäranta
+- For the definition of $\delta_K$ in SUPG, a conditional definition is needed:
     ```python
     deltaK = delta * conditional(lt(ReK, one), h/(ubar+1e-10), h**2 * Re)
     ```
@@ -182,8 +184,15 @@ This lab contains the solution of the thermal boundary layer near a hot plate, m
 
 # Lab 12. Level-set method for multi-phase flows.
 
-Dir + Free-slip => I still need the null space
+The goal of this lab is to implement the level-set method for a simple multi-phase flow for to immiscible fluids: in the initial condition, the lighter fluid is confined in a circular region inside the heavier one. Contents:
+- The time loop is designed in the usual way, alternating between the equation for the fluids and the one for the phase variable (we have to update the density at each time step too!)
+- The initialization of the phase variable is made by interpolating the right expression
+- The definition of the density is made using the conditional function
+
+> In this case we have Dirichlet and free-slip conditions, so we still need to the null space to the solver.
 
 # Lab 13. Inexact factorization.
 
-In the mass matrix of ACT we include 1/dt!!
+This lab is based on a trick to implement the algebraic Chorin-Temam method using `fieldsplit` and differential forms.
+
+> In the mass matrix we include `1/dt`!.
