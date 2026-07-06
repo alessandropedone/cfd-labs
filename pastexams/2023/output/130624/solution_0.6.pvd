@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+<Collection>
+<DataSet timestep="0" file="solution_0.6/solution_0.6_0.vtu" />
+<DataSet timestep="1" file="solution_0.6/solution_0.6_1.vtu" />
+<DataSet timestep="2" file="solution_0.6/solution_0.6_2.vtu" />
+<DataSet timestep="3" file="solution_0.6/solution_0.6_3.vtu" />
+<DataSet timestep="4" file="solution_0.6/solution_0.6_4.vtu" />
+<DataSet timestep="5" file="solution_0.6/solution_0.6_5.vtu" />
+<DataSet timestep="6" file="solution_0.6/solution_0.6_6.vtu" />
+</Collection>
+</VTKFile>

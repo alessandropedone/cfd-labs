@@ -5,6 +5,8 @@ In particular, each folder corresponds to a lab and contains the problem, the so
 
 In this README, you can find a quick overview of the content of each lab.
 
+> You can also find a couple of past exams with my code as the solution.
+
 ## Lab 1. Firedrake.
 This lab contains a general introduction to Firedrake with some basic notes about solving numerical problems with this library. Contents:
 - Define and plot the mesh
