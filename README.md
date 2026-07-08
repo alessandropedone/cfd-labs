@@ -23,7 +23,7 @@ This lab contains a general introduction to Firedrake with some basic notes abou
 This lab contains the Stokes system assembly and solution, in very simple cases (Coutte flow and Poiseuille flow). Contents:
 - Define and plot a rectangular mesh
 - Define vector and mixed function space
-- Tests with non inf-sup stable spaces $\mathbb{P}^1/\mathbb{P}^0$ and $\mathbb{P}^1/\mathbb{P}^1$ 
+- Tests with non inf-sup stable spaces $\mathbb{P}^1/\mathbb{P}^0$ and $\mathbb{P}^1/\mathbb{P}^1$
 - Tests with inf-sup stable spaces $\mathbb{P}^2/\mathbb{P}^1$ and $\mathbb{P}_b^1/\mathbb{P}^1$
 - Quiver plot for the velocity field
 - Compute the $H^1$, $H^1_0$ and $L^2$ errors
